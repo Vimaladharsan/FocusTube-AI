@@ -1,75 +1,112 @@
-# React + TypeScript + Vite
+# 🚀 FocusTube AI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Transform YouTube and web browsing into a distraction-free, productivity-first learning experience.
 
-Currently, two official plugins are available:
+## 📖 Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+FocusTube AI is a Chrome Extension designed to improve productivity by combining:
 
-## React Compiler
+- 🛡 Universal Ad Blocking
+- 🎥 YouTube Enhancement Tools
+- 🎯 Goal-Based Learning
+- 📊 Productivity Analytics
+- 🔒 Privacy Protection
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Instead of simply blocking ads, FocusTube AI helps users stay focused on their learning and career goals by reducing distractions and creating a personalized browsing experience.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ✨ Planned Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🛡 Universal Ad Blocker
+- Block banner ads
+- Block popup ads
+- Block video ads
+- Block trackers
+- Website whitelist
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 🎥 YouTube Productivity
+- Hide Shorts
+- Hide Comments
+- Hide Recommendations
+- Hide End Screen
+- Focus Mode
+- Custom Playback Controls
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 📈 Productivity Dashboard
+- Ads Blocked
+- Time Saved
+- Educational Watch Time
+- Entertainment Watch Time
+- Productivity Score
 
-```
+### 🎯 Goal-Based Learning
+- Career Goals
+- Learning Roadmap
+- Personalized Recommendations
+- Skill Tracking
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 🔒 Privacy
+- Tracker Blocking
+- URL Cleaning
+- Privacy Insights
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🛠 Tech Stack
+
+- TypeScript
+- React
+- Vite
+- Chrome Extension Manifest V3
+- Chrome Extension APIs
+- Tailwind CSS
+- ESLint
+- Git & GitHub
+
+---
+
+## 📁 Project Structure
 
 ```
+src/
+├── assets/
+├── background/
+├── components/
+├── content/
+├── hooks/
+├── layouts/
+├── pages/
+├── services/
+├── store/
+├── styles/
+├── types/
+├── utils/
+└── lib/
+```
+
+---
+
+## 🚀 Roadmap
+
+- [x] Project Setup
+- [x] React + TypeScript + Vite
+- [x] Initial Architecture
+- [ ] Chrome Extension Foundation
+- [ ] Universal Ad Blocker
+- [ ] YouTube Enhancement
+- [ ] Productivity Dashboard
+- [ ] Goal-Based Recommendation Engine
+- [ ] Chrome Web Store Release
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 👨‍💻 Author
+
+Developed by **Nithin Vimal**
