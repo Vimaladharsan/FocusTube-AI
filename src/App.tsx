@@ -1,4 +1,4 @@
-import Popup from "./pages/Popup/Popup";
+import Popup from "./features/popup/Popup";
 
 function App() {
   return <Popup />;
