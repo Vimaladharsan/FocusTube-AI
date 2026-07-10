@@ -1,7 +1,7 @@
+import Popup from "./pages/Popup/Popup";
+
 function App() {
-  return (
-    <h1>FocusTube AI</h1>
-  );
+  return <Popup />;
 }
 
 export default App;
