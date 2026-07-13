@@ -14,6 +14,8 @@ const manifest: ManifestV3Export = {
     default_popup: "index.html",
     default_title: "FocusTube AI",
   },
+  
+  permissions: ["storage"],
 
   background: {
     service_worker: "src/background/background.ts",
