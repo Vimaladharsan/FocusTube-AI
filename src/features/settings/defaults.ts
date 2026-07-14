@@ -1,4 +1,5 @@
-import type { ExtensionSettings } from "./types";
+import type { ExtensionSettings } from "../../types/settings";
+
 
 export const DEFAULT_SETTINGS: ExtensionSettings = {
   adBlockEnabled: true,
@@ -6,4 +7,5 @@ export const DEFAULT_SETTINGS: ExtensionSettings = {
   hideShorts: true,
   hideComments: false,
   dashboardEnabled: true,
+  developerMode: false,
 };

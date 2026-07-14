@@ -1,5 +1,5 @@
 import { get, set } from "../../services/storage";
-import type { ExtensionSettings } from "./types";
+import type { ExtensionSettings } from "../../types/settings";
 import { DEFAULT_SETTINGS } from "./defaults";
 
 

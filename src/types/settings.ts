@@ -4,4 +4,5 @@ export interface ExtensionSettings {
   hideShorts: boolean;
   hideComments: boolean;
   dashboardEnabled: boolean;
+  developerMode: boolean;
 }

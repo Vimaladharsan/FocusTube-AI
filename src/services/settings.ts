@@ -7,6 +7,7 @@ const DEFAULT_SETTINGS: ExtensionSettings = {
   hideShorts: true,
   hideComments: false,
   dashboardEnabled: true,
+  developerMode: false,
 };
 
 const SETTINGS_KEY = "settings";
