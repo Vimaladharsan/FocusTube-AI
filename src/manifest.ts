@@ -15,7 +15,17 @@ const manifest: ManifestV3Export = {
     default_title: "FocusTube AI",
   },
   
-  permissions: ["storage"],
+  permissions: ["storage", "declarativeNetRequest"],
+
+  declarative_net_request: {
+    rule_resources: [
+      {
+        id: "adblock_rules",
+        enabled: true,
+        path: "rules/adblock.json",
+      },
+    ],
+  },
 
   background: {
     service_worker: "src/background/background.ts",
