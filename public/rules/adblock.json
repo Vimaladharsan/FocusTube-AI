@@ -79,5 +79,32 @@
       "urlFilter": "||youtube.com/get_video_info*&adformat",
       "resourceTypes": ["xmlhttprequest", "other"]
     }
+  },
+  {
+    "id": 10,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||googletagmanager.com/gtag/",
+      "resourceTypes": ["script", "xmlhttprequest", "other"]
+    }
+  },
+  {
+    "id": 11,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||youtube.com/youtubei/v1/log_event",
+      "resourceTypes": ["xmlhttprequest", "ping", "other"]
+    }
+  },
+  {
+    "id": 12,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||static.doubleclick.net/",
+      "resourceTypes": ["script", "image", "other"]
+    }
   }
 ]
