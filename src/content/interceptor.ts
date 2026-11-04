@@ -1,15 +1,7 @@
-const AD_FIELDS = [
-  "adPlacements",
-  "playerAds",
-  "adSlots",
-  "adBreakHeartbeatParams",
-  "auxiliaryUi",
-] as const;
-
 function stripAds(data: Record<string, unknown>): void {
-  for (const field of AD_FIELDS) {
-    delete data[field];
-  }
+  if ("adPlacements" in data) data.adPlacements = [];
+  if ("playerAds" in data) data.playerAds = [];
+  if ("adSlots" in data) data.adSlots = [];
 }
 
 function isEnabled(): boolean {
@@ -34,6 +26,7 @@ const _fetch = window.fetch.bind(window);
 window.fetch = async function (...args: Parameters<typeof fetch>): Promise<Response> {
   const input = args[0];
   const url = input instanceof Request ? input.url : String(input);
+
   const response = await _fetch(...args);
 
   const isPlayerApi =
