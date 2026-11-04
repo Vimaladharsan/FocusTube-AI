@@ -32,10 +32,16 @@ const manifest: ManifestV3Export = {
     type: "module",
   },
   content_scripts: [
-  {
-    matches: ["https://*.youtube.com/*"],
-    js: ["src/content/content.ts"],
-  },
-],
+    {
+      matches: ["https://*.youtube.com/*"],
+      js: ["src/content/interceptor.ts"],
+      world: "MAIN",
+      run_at: "document_start",
+    },
+    {
+      matches: ["https://*.youtube.com/*"],
+      js: ["src/content/content.ts"],
+    },
+  ],
 };
 export default manifest;

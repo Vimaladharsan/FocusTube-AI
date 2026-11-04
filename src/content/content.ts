@@ -21,6 +21,9 @@ const AD_HIDE_CSS = `
 
 async function initializeContentScript() {
   const settings = await getSettings();
+
+  localStorage.setItem("focustube_adblock", settings.adBlockEnabled ? "1" : "0");
+
   if (!settings.adBlockEnabled) return;
 
   const style = document.createElement("style");
