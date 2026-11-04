@@ -1,5 +1,3 @@
 export const SELECTORS = {
-  PLAYER: ".ad-showing",
-
-  SKIP_BUTTON: "#skip-button",
+  SKIP_BUTTON: ".ytp-skip-ad-button",
 };
