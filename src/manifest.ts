@@ -41,6 +41,7 @@ const manifest: ManifestV3Export = {
     {
       matches: ["https://*.youtube.com/*"],
       js: ["src/content/content.ts"],
+      run_at: "document_end",
     },
   ],
 };

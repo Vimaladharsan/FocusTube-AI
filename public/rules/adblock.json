@@ -106,5 +106,23 @@
       "urlFilter": "||static.doubleclick.net/",
       "resourceTypes": ["script", "image", "other"]
     }
+  },
+  {
+    "id": 13,
+    "priority": 2,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||googlevideo.com/videoplayback*ctier=A",
+      "resourceTypes": ["media", "xmlhttprequest", "other"]
+    }
+  },
+  {
+    "id": 14,
+    "priority": 2,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||youtube.com/youtubei/v1/player*adformat",
+      "resourceTypes": ["xmlhttprequest", "other"]
+    }
   }
 ]
