@@ -1,4 +1,5 @@
 import AdBlockToggle from "../adblock/components/AdBlockToggle";
+import SpeedController from "../speed/components/SpeedController";
 
 function Popup() {
   return (
@@ -9,7 +10,8 @@ function Popup() {
       </header>
 
       <main className="popup-content">
-          <AdBlockToggle />
+        <AdBlockToggle />
+        <SpeedController />
       </main>
     </div>
   );

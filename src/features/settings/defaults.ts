@@ -8,4 +8,5 @@ export const DEFAULT_SETTINGS: ExtensionSettings = {
   hideComments: false,
   dashboardEnabled: true,
   developerMode: false,
+  videoSpeed: 1,
 };

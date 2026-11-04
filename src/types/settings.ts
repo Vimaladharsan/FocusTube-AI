@@ -5,4 +5,5 @@ export interface ExtensionSettings {
   hideComments: boolean;
   dashboardEnabled: boolean;
   developerMode: boolean;
+  videoSpeed: number;
 }

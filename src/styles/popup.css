@@ -98,3 +98,52 @@
 .toggle-switch.active .toggle-thumb {
   transform: translateX(22px);
 }
+
+.speed-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.speed-btn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #f1f5f9;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  line-height: 1;
+}
+
+.speed-btn:hover:not(:disabled) {
+  background: #e2e8f0;
+}
+
+.speed-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.speed-value {
+  min-width: 42px;
+  height: 28px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: white;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.2s;
+}
+
+.speed-value:hover {
+  background: #f8fafc;
+}
