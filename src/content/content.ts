@@ -1,6 +1,20 @@
 import { getSettings } from "../features/settings";
 import { applyVideoSpeed } from "../features/speed/controller";
 
+const SHORTS_HIDE_CSS = `
+  ytd-rich-shelf-renderer[is-shorts],
+  ytd-reel-shelf-renderer,
+  ytd-guide-entry-renderer:has(a[href="/shorts"]),
+  ytd-mini-guide-entry-renderer:has(a[href="/shorts"]),
+  yt-tab-shape[tab-identifier="Shorts"],
+  ytd-thumbnail-overlay-time-status-renderer[overlay-style="SHORTS"],
+  ytd-video-renderer:has(ytd-thumbnail-overlay-time-status-renderer[overlay-style="SHORTS"]),
+  ytd-grid-video-renderer:has(ytd-thumbnail-overlay-time-status-renderer[overlay-style="SHORTS"]),
+  ytd-rich-item-renderer:has(ytd-thumbnail-overlay-time-status-renderer[overlay-style="SHORTS"]) {
+    display: none !important;
+  }
+`;
+
 const AD_HIDE_CSS = `
   /* Video player ad overlays */
   .video-ads.ytp-ad-module,
@@ -139,6 +153,12 @@ async function initializeContentScript() {
   const style = document.createElement("style");
   style.textContent = AD_HIDE_CSS;
   document.documentElement.appendChild(style);
+
+  if (settings.hideShorts) {
+    const shortsStyle = document.createElement("style");
+    shortsStyle.textContent = SHORTS_HIDE_CSS;
+    document.documentElement.appendChild(shortsStyle);
+  }
 
   if (settings.videoSpeed !== 1) {
     applyVideoSpeed(settings.videoSpeed);
