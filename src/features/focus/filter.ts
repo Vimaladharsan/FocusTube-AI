@@ -1,5 +1,6 @@
 import type { FocusMode } from "../../types/settings";
 import { classifyTitle } from "./classifier";
+import { incrementBlockedCount } from "./counter";
 
 const VIDEO_CARD_SELECTOR = [
   "ytd-rich-item-renderer",
@@ -19,11 +20,15 @@ function filterCard(el: Element) {
   const title = getTitleFromCard(el);
   if (!title) return;
   const result = classifyTitle(title, activeMode, activeCustomKeywords);
+  const alreadyHidden = (el as HTMLElement).style.display === "none";
   (el as HTMLElement).style.setProperty(
     "display",
     result === "hide" ? "none" : "",
     result === "hide" ? "important" : ""
   );
+  if (result === "hide" && !alreadyHidden) {
+    incrementBlockedCount();
+  }
 }
 
 function filterAll() {
