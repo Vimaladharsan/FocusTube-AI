@@ -1,5 +1,6 @@
 import { getSettings } from "../features/settings";
 import { applyVideoSpeed } from "../features/speed/controller";
+import { initSpeedOverlay } from "../features/speed/overlay";
 import { startFocusFilter, stopFocusFilter } from "../features/focus/filter";
 
 const SHORTS_HIDE_CSS = `
@@ -169,6 +170,8 @@ async function initializeContentScript() {
   if (settings.videoSpeed !== 1) {
     applyVideoSpeed(settings.videoSpeed);
   }
+
+  initSpeedOverlay();
 }
 
 initializeContentScript();
