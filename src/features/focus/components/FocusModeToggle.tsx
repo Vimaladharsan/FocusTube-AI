@@ -1,15 +1,46 @@
-import { useFocusMode } from "../hooks/useFocusMode";
-import SettingCard from "../../popup/components/SettingCard";
-import ToggleSwitch from "../../popup/components/ToggleSwitch";
+import { useEffect, useState } from "react";
+import { getSettings } from "../../settings";
+import type { FocusMode } from "../../../types/settings";
+
+const MODE_META: Record<FocusMode, { label: string; emoji: string }> = {
+  off:       { label: "Off",        emoji: "⭕" },
+  education: { label: "Education",  emoji: "🎓" },
+  business:  { label: "Business",   emoji: "💼" },
+  learning:  { label: "Learning",   emoji: "💻" },
+  deepwork:  { label: "Deep Work",  emoji: "🧠" },
+  custom:    { label: "Custom",     emoji: "⚙️" },
+};
 
 export default function FocusModeToggle() {
-  const { enabled, toggle } = useFocusMode();
+  const [mode, setMode] = useState<FocusMode>("off");
+
+  useEffect(() => {
+    getSettings().then((s) => setMode(s.focusMode));
+  }, []);
+
+  function openDashboard() {
+    chrome.runtime.openOptionsPage();
+  }
+
+  const meta = MODE_META[mode];
+  const isActive = mode !== "off";
+
   return (
-    <SettingCard
-      title="Focus Mode"
-      description="Show only educational & productivity videos"
-    >
-      <ToggleSwitch checked={enabled} onChange={toggle} />
-    </SettingCard>
+    <div className="setting-card">
+      <div className="setting-card-content">
+        <h3>Focus Mode</h3>
+        <p>
+          {isActive
+            ? `${meta.emoji} ${meta.label} — filtering active`
+            : "No filtering — all videos visible"}
+        </p>
+      </div>
+      <div className="setting-card-action">
+        <button className="dashboard-btn" onClick={openDashboard}>
+          Configure
+        </button>
+      </div>
+    </div>
   );
 }
+

@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
-import { isFocusModeEnabled, setFocusMode } from "../service";
+import type { FocusMode } from "../../../types/settings";
+import { getFocusMode, setFocusMode } from "../service";
 
 export function useFocusMode() {
-  const [enabled, setEnabled] = useState(false);
+  const [mode, setMode] = useState<FocusMode>("off");
 
   useEffect(() => {
-    isFocusModeEnabled().then(setEnabled);
+    getFocusMode().then(setMode);
   }, []);
 
-  async function toggle() {
-    const next = !enabled;
-    setEnabled(next);
+  async function selectMode(next: FocusMode) {
+    setMode(next);
     await setFocusMode(next);
   }
 
-  return { enabled, toggle };
+  return { mode, selectMode };
 }

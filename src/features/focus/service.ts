@@ -1,12 +1,13 @@
+import type { FocusMode } from "../../types/settings";
 import { getSettings, saveSettings } from "../settings";
 
-export async function isFocusModeEnabled(): Promise<boolean> {
+export async function getFocusMode(): Promise<FocusMode> {
   const settings = await getSettings();
-  return settings.focusModeEnabled;
+  return settings.focusMode;
 }
 
-export async function setFocusMode(enabled: boolean): Promise<void> {
+export async function setFocusMode(mode: FocusMode): Promise<void> {
   const settings = await getSettings();
-  settings.focusModeEnabled = enabled;
+  settings.focusMode = mode;
   await saveSettings(settings);
 }

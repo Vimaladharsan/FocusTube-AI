@@ -1,9 +1,11 @@
+export type FocusMode = "off" | "education" | "business" | "learning" | "deepwork" | "custom";
+
 export interface ExtensionSettings {
   adBlockEnabled: boolean;
-  focusModeEnabled: boolean;
+  focusMode: FocusMode;
+  customKeywords: string[];
   hideShorts: boolean;
   hideComments: boolean;
-  dashboardEnabled: boolean;
   developerMode: boolean;
   videoSpeed: number;
 }

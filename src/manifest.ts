@@ -17,6 +17,11 @@ const manifest: ManifestV3Export = {
   
   permissions: ["storage", "declarativeNetRequest"],
 
+  options_ui: {
+    page: "src/options/dashboard.html",
+    open_in_tab: true,
+  },
+
   declarative_net_request: {
     rule_resources: [
       {

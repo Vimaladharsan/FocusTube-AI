@@ -1,6 +1,6 @@
 import { getSettings } from "../features/settings";
 import { applyVideoSpeed } from "../features/speed/controller";
-import { startFocusFilter } from "../features/focus/filter";
+import { startFocusFilter, stopFocusFilter } from "../features/focus/filter";
 
 const SHORTS_HIDE_CSS = `
   ytd-rich-shelf-renderer[is-shorts],
@@ -160,8 +160,10 @@ async function initializeContentScript() {
     document.documentElement.appendChild(shortsStyle);
   }
 
-  if (settings.focusModeEnabled) {
-    startFocusFilter();
+  if (settings.focusMode !== "off") {
+    startFocusFilter(settings.focusMode, settings.customKeywords);
+  } else {
+    stopFocusFilter();
   }
 
   if (settings.videoSpeed !== 1) {
