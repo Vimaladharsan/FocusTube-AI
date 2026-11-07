@@ -4,6 +4,7 @@ import { initSpeedOverlay } from "../features/speed/overlay";
 import { startFocusFilter, stopFocusFilter } from "../features/focus/filter";
 import { startTracker, getTodayMinutes } from "../features/watchtime/tracker";
 import { showLimitBanner } from "../features/watchtime/banner";
+import { updateStreak } from "../features/watchtime/streak";
 
 const COMMENTS_HIDE_CSS = `
   #comments,
@@ -204,6 +205,8 @@ async function initializeContentScript() {
   initSpeedOverlay();
 
   const limitMins = settings.watchTimeLimit;
+  updateStreak(limitMins);
+
   if (limitMins > 0) {
     if (getTodayMinutes() >= limitMins) {
       showLimitBanner(limitMins);

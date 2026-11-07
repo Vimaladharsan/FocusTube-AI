@@ -3,6 +3,8 @@ import { getSettings, saveSettings } from "../features/settings";
 import { MODES } from "../features/focus/modes";
 import type { FocusMode } from "../types/settings";
 import { getTodaySeconds } from "../features/watchtime/tracker";
+import { getStreak, getLast7Days } from "../features/watchtime/streak";
+import type { DayStat } from "../features/watchtime/streak";
 
 const PRESETS = [15, 30, 60, 90, 120];
 
@@ -31,6 +33,8 @@ export default function Dashboard() {
   const [watchedSeconds, setWatchedSeconds] = useState(0);
   const [limitMins, setLimitMins] = useState(0);
   const [limitInput, setLimitInput] = useState("");
+  const [streak, setStreak] = useState(0);
+  const [weekStats, setWeekStats] = useState<DayStat[]>([]);
 
   useEffect(() => {
     getSettings().then((s) => {
@@ -38,9 +42,13 @@ export default function Dashboard() {
       setCustomKeywords(s.customKeywords ?? []);
       setLimitMins(s.watchTimeLimit ?? 0);
       setLimitInput(s.watchTimeLimit > 0 ? String(s.watchTimeLimit) : "");
+      setWeekStats(getLast7Days(s.watchTimeLimit ?? 0));
     });
     setWatchedSeconds(getTodaySeconds());
-    const id = window.setInterval(() => setWatchedSeconds(getTodaySeconds()), 5000);
+    setStreak(getStreak());
+    const id = window.setInterval(() => {
+      setWatchedSeconds(getTodaySeconds());
+    }, 5000);
     return () => clearInterval(id);
   }, []);
 
@@ -75,6 +83,7 @@ export default function Dashboard() {
   async function saveLimit(mins: number) {
     setLimitMins(mins);
     setLimitInput(mins > 0 ? String(mins) : "");
+    setWeekStats(getLast7Days(mins));
     const settings = await getSettings();
     settings.watchTimeLimit = mins;
     await saveSettings(settings);
@@ -177,7 +186,35 @@ export default function Dashboard() {
               <span className="wt-stat-label">Status</span>
             </div>
           )}
+          {limitMins > 0 && (
+            <div className="wt-stat wt-streak">
+              <span className="wt-stat-value">
+                🔥 {streak}
+              </span>
+              <span className="wt-stat-label">Day streak</span>
+            </div>
+          )}
         </div>
+
+        {limitMins > 0 && weekStats.length > 0 && (
+          <div className="wt-week">
+            {weekStats.map((day) => (
+              <div key={day.label} className="wt-day">
+                <div
+                  className={`wt-day-dot ${
+                    day.isToday
+                      ? "wt-day-dot--today"
+                      : day.underLimit
+                      ? "wt-day-dot--good"
+                      : "wt-day-dot--bad"
+                  }`}
+                  title={`${day.label}: ${formatTime(day.watchedSeconds)}`}
+                />
+                <span className="wt-day-label">{day.label}</span>
+              </div>
+            ))}
+          </div>
+        )}
 
         {limitMins > 0 && (
           <div className="wt-bar-wrap">

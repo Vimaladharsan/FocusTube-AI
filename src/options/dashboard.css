@@ -318,3 +318,39 @@ body {
   gap: 10px;
   margin-top: 4px;
 }
+
+.wt-streak .wt-stat-value { color: #ea580c; }
+
+.wt-week {
+  display: flex;
+  gap: 10px;
+  margin: 4px 0 20px;
+}
+
+.wt-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.wt-day-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e2e8f0;
+}
+
+.wt-day-dot--good  { background: #22c55e; }
+.wt-day-dot--bad   { background: #ef4444; }
+.wt-day-dot--today {
+  background: #2563eb;
+  box-shadow: 0 0 0 3px #bfdbfe;
+}
+
+.wt-day-label {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
