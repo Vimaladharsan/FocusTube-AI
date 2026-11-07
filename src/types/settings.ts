@@ -7,6 +7,7 @@ export interface ExtensionSettings {
   hideShorts: boolean;
   hideComments: boolean;
   hideSuggested: boolean;
+  watchTimeLimit: number;
   developerMode: boolean;
   videoSpeed: number;
 }

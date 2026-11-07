@@ -2,6 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import { getSettings, saveSettings } from "../features/settings";
 import { MODES } from "../features/focus/modes";
 import type { FocusMode } from "../types/settings";
+import { getTodaySeconds } from "../features/watchtime/tracker";
+
+const PRESETS = [15, 30, 60, 90, 120];
+
+function formatTime(seconds: number): string {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
+  if (h > 0) return `${h}h ${m}m`;
+  if (m > 0) return `${m}m ${s}s`;
+  return `${s}s`;
+}
 
 const ALL_MODES: { id: FocusMode; label: string; emoji: string; description: string }[] = [
   { id: "off", label: "Off", emoji: "⭕", description: "No filtering — show all videos" },
@@ -16,11 +28,20 @@ export default function Dashboard() {
   const [saved, setSaved] = useState(false);
   const saveTimer = useRef<number | null>(null);
 
+  const [watchedSeconds, setWatchedSeconds] = useState(0);
+  const [limitMins, setLimitMins] = useState(0);
+  const [limitInput, setLimitInput] = useState("");
+
   useEffect(() => {
     getSettings().then((s) => {
       setActiveMode(s.focusMode);
       setCustomKeywords(s.customKeywords ?? []);
+      setLimitMins(s.watchTimeLimit ?? 0);
+      setLimitInput(s.watchTimeLimit > 0 ? String(s.watchTimeLimit) : "");
     });
+    setWatchedSeconds(getTodaySeconds());
+    const id = window.setInterval(() => setWatchedSeconds(getTodaySeconds()), 5000);
+    return () => clearInterval(id);
   }, []);
 
   async function selectMode(mode: FocusMode) {
@@ -49,6 +70,15 @@ export default function Dashboard() {
     const settings = await getSettings();
     settings.customKeywords = next;
     await saveSettings(settings);
+  }
+
+  async function saveLimit(mins: number) {
+    setLimitMins(mins);
+    setLimitInput(mins > 0 ? String(mins) : "");
+    const settings = await getSettings();
+    settings.watchTimeLimit = mins;
+    await saveSettings(settings);
+    flashSaved();
   }
 
   function flashSaved() {
@@ -121,6 +151,90 @@ export default function Dashboard() {
           </div>
         </section>
       )}
+
+      <section className="dash-section">
+        <h2>Watch Time</h2>
+        <p className="dash-subtitle">Today's YouTube usage</p>
+
+        <div className="wt-stats-row">
+          <div className="wt-stat">
+            <span className="wt-stat-value">{formatTime(watchedSeconds)}</span>
+            <span className="wt-stat-label">Watched today</span>
+          </div>
+          {limitMins > 0 && (
+            <div className="wt-stat">
+              <span className="wt-stat-value">{limitMins}m</span>
+              <span className="wt-stat-label">Daily limit</span>
+            </div>
+          )}
+          {limitMins > 0 && (
+            <div className="wt-stat">
+              <span className={`wt-stat-value ${watchedSeconds >= limitMins * 60 ? "wt-over" : "wt-under"}`}>
+                {watchedSeconds >= limitMins * 60
+                  ? "Limit reached"
+                  : formatTime(Math.max(0, limitMins * 60 - watchedSeconds)) + " left"}
+              </span>
+              <span className="wt-stat-label">Status</span>
+            </div>
+          )}
+        </div>
+
+        {limitMins > 0 && (
+          <div className="wt-bar-wrap">
+            <div
+              className="wt-bar-fill"
+              style={{ width: `${Math.min(100, (watchedSeconds / (limitMins * 60)) * 100)}%` }}
+            />
+          </div>
+        )}
+
+        <div className="wt-limit-row">
+          <span className="wt-limit-label">Daily limit</span>
+          <div className="wt-presets">
+            {PRESETS.map((p) => (
+              <button
+                key={p}
+                className={`wt-preset ${limitMins === p ? "wt-preset--active" : ""}`}
+                onClick={() => saveLimit(p)}
+              >
+                {p}m
+              </button>
+            ))}
+            <button
+              className={`wt-preset ${limitMins === 0 ? "wt-preset--active" : ""}`}
+              onClick={() => saveLimit(0)}
+            >
+              Off
+            </button>
+          </div>
+          <div className="wt-custom-row">
+            <input
+              className="keyword-input"
+              type="number"
+              min="1"
+              max="480"
+              placeholder="Custom (mins)"
+              value={limitInput}
+              onChange={(e) => setLimitInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  const v = parseInt(limitInput, 10);
+                  if (v > 0) saveLimit(v);
+                }
+              }}
+            />
+            <button
+              className="keyword-add-btn"
+              onClick={() => {
+                const v = parseInt(limitInput, 10);
+                if (v > 0) saveLimit(v);
+              }}
+            >
+              Set
+            </button>
+          </div>
+        </div>
+      </section>
 
       {activeMode !== "off" && activeMode !== "custom" && (
         <section className="dash-section">

@@ -7,6 +7,7 @@ export const DEFAULT_SETTINGS: ExtensionSettings = {
   hideShorts: true,
   hideComments: false,
   hideSuggested: false,
+  watchTimeLimit: 0,
   developerMode: false,
   videoSpeed: 1,
 };

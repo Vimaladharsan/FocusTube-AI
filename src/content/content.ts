@@ -2,6 +2,8 @@ import { getSettings } from "../features/settings";
 import { applyVideoSpeed } from "../features/speed/controller";
 import { initSpeedOverlay } from "../features/speed/overlay";
 import { startFocusFilter, stopFocusFilter } from "../features/focus/filter";
+import { startTracker, getTodayMinutes } from "../features/watchtime/tracker";
+import { showLimitBanner } from "../features/watchtime/banner";
 
 const COMMENTS_HIDE_CSS = `
   #comments,
@@ -200,6 +202,17 @@ async function initializeContentScript() {
   }
 
   initSpeedOverlay();
+
+  const limitMins = settings.watchTimeLimit;
+  if (limitMins > 0) {
+    if (getTodayMinutes() >= limitMins) {
+      showLimitBanner(limitMins);
+    } else {
+      startTracker(limitMins, () => showLimitBanner(limitMins));
+    }
+  } else {
+    startTracker(0, () => {});
+  }
 }
 
 initializeContentScript();
