@@ -6,6 +6,7 @@ export const DEFAULT_SETTINGS: ExtensionSettings = {
   customKeywords: [],
   hideShorts: true,
   hideComments: false,
+  hideSuggested: false,
   developerMode: false,
   videoSpeed: 1,
 };

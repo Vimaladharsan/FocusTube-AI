@@ -1,6 +1,8 @@
 import AdBlockToggle from "../adblock/components/AdBlockToggle";
 import SpeedController from "../speed/components/SpeedController";
 import HideShortsToggle from "../shorts/components/HideShortsToggle";
+import HideCommentsToggle from "../comments/components/HideCommentsToggle";
+import HideSuggestedToggle from "../suggested/components/HideSuggestedToggle";
 import FocusModeToggle from "../focus/components/FocusModeToggle";
 
 function Popup() {
@@ -15,6 +17,8 @@ function Popup() {
         <AdBlockToggle />
         <FocusModeToggle />
         <HideShortsToggle />
+        <HideCommentsToggle />
+        <HideSuggestedToggle />
         <SpeedController />
       </main>
     </div>

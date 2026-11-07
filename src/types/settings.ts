@@ -6,6 +6,7 @@ export interface ExtensionSettings {
   customKeywords: string[];
   hideShorts: boolean;
   hideComments: boolean;
+  hideSuggested: boolean;
   developerMode: boolean;
   videoSpeed: number;
 }

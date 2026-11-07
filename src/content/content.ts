@@ -3,6 +3,22 @@ import { applyVideoSpeed } from "../features/speed/controller";
 import { initSpeedOverlay } from "../features/speed/overlay";
 import { startFocusFilter, stopFocusFilter } from "../features/focus/filter";
 
+const COMMENTS_HIDE_CSS = `
+  #comments,
+  ytd-comments {
+    display: none !important;
+  }
+`;
+
+const SUGGESTED_HIDE_CSS = `
+  #secondary,
+  .ytp-endscreen-content,
+  .ytp-ce-element,
+  .ytp-autonav-endscreen-upnext-container {
+    display: none !important;
+  }
+`;
+
 const SHORTS_HIDE_CSS = `
   ytd-rich-shelf-renderer[is-shorts],
   ytd-reel-shelf-renderer,
@@ -159,6 +175,18 @@ async function initializeContentScript() {
     const shortsStyle = document.createElement("style");
     shortsStyle.textContent = SHORTS_HIDE_CSS;
     document.documentElement.appendChild(shortsStyle);
+  }
+
+  if (settings.hideComments) {
+    const commentsStyle = document.createElement("style");
+    commentsStyle.textContent = COMMENTS_HIDE_CSS;
+    document.documentElement.appendChild(commentsStyle);
+  }
+
+  if (settings.hideSuggested) {
+    const suggestedStyle = document.createElement("style");
+    suggestedStyle.textContent = SUGGESTED_HIDE_CSS;
+    document.documentElement.appendChild(suggestedStyle);
   }
 
   if (settings.focusMode !== "off") {
