@@ -1,5 +1,6 @@
 import { getSettings } from "../features/settings";
 import { applyVideoSpeed } from "../features/speed/controller";
+import { startFocusFilter } from "../features/focus/filter";
 
 const SHORTS_HIDE_CSS = `
   ytd-rich-shelf-renderer[is-shorts],
@@ -147,17 +148,20 @@ async function initializeContentScript() {
 
   if (!settings.adBlockEnabled) {
     stopAdPoll();
-    return;
+  } else {
+    const adStyle = document.createElement("style");
+    adStyle.textContent = AD_HIDE_CSS;
+    document.documentElement.appendChild(adStyle);
   }
-
-  const style = document.createElement("style");
-  style.textContent = AD_HIDE_CSS;
-  document.documentElement.appendChild(style);
 
   if (settings.hideShorts) {
     const shortsStyle = document.createElement("style");
     shortsStyle.textContent = SHORTS_HIDE_CSS;
     document.documentElement.appendChild(shortsStyle);
+  }
+
+  if (settings.focusModeEnabled) {
+    startFocusFilter();
   }
 
   if (settings.videoSpeed !== 1) {

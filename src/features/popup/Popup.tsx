@@ -1,6 +1,7 @@
 import AdBlockToggle from "../adblock/components/AdBlockToggle";
 import SpeedController from "../speed/components/SpeedController";
 import HideShortsToggle from "../shorts/components/HideShortsToggle";
+import FocusModeToggle from "../focus/components/FocusModeToggle";
 
 function Popup() {
   return (
@@ -12,6 +13,7 @@ function Popup() {
 
       <main className="popup-content">
         <AdBlockToggle />
+        <FocusModeToggle />
         <HideShortsToggle />
         <SpeedController />
       </main>
