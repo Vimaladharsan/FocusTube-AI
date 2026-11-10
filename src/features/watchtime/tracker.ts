@@ -27,6 +27,13 @@ function isAdPlaying(): boolean {
 let tickInterval: number | null = null;
 let onLimitHit: (() => void) | null = null;
 let limitSeconds = 0;
+let syncCounter = 0;
+const SYNC_INTERVAL = 30;
+
+function syncToStorage(seconds: number): void {
+  const key = getTodayKey();
+  chrome.storage.local.set({ [key]: seconds });
+}
 
 function tick() {
   const video = getVideo();
@@ -36,6 +43,12 @@ function tick() {
   const current = parseInt(localStorage.getItem(today) ?? "0", 10);
   const next = current + 1;
   localStorage.setItem(today, String(next));
+
+  syncCounter++;
+  if (syncCounter >= SYNC_INTERVAL) {
+    syncCounter = 0;
+    syncToStorage(next);
+  }
 
   if (limitSeconds > 0 && next >= limitSeconds) {
     onLimitHit?.();
