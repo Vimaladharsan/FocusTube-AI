@@ -30,6 +30,9 @@ export default function Dashboard() {
   const [saved, setSaved] = useState(false);
   const saveTimer = useRef<number | null>(null);
 
+  const [blockedChannels, setBlockedChannels] = useState<string[]>([]);
+  const [channelInput, setChannelInput] = useState("");
+
   const [watchedSeconds, setWatchedSeconds] = useState(0);
   const [limitMins, setLimitMins] = useState(0);
   const [limitInput, setLimitInput] = useState("");
@@ -43,6 +46,7 @@ export default function Dashboard() {
       setLimitMins(s.watchTimeLimit ?? 0);
       setLimitInput(s.watchTimeLimit > 0 ? String(s.watchTimeLimit) : "");
       setWeekStats(getLast7Days(s.watchTimeLimit ?? 0));
+      setBlockedChannels(s.blockedChannels ?? []);
     });
     setWatchedSeconds(getTodaySeconds());
     setStreak(getStreak());
@@ -77,6 +81,26 @@ export default function Dashboard() {
     setCustomKeywords(next);
     const settings = await getSettings();
     settings.customKeywords = next;
+    await saveSettings(settings);
+  }
+
+  async function addChannel() {
+    const ch = channelInput.trim().toLowerCase();
+    if (!ch || blockedChannels.includes(ch)) return;
+    const next = [...blockedChannels, ch];
+    setBlockedChannels(next);
+    setChannelInput("");
+    const settings = await getSettings();
+    settings.blockedChannels = next;
+    await saveSettings(settings);
+    flashSaved();
+  }
+
+  async function removeChannel(ch: string) {
+    const next = blockedChannels.filter((c) => c !== ch);
+    setBlockedChannels(next);
+    const settings = await getSettings();
+    settings.blockedChannels = next;
     await saveSettings(settings);
   }
 
@@ -270,6 +294,37 @@ export default function Dashboard() {
               Set
             </button>
           </div>
+        </div>
+      </section>
+
+      <section className="dash-section">
+        <h2>Blocked Channels</h2>
+        <p className="dash-subtitle">Hide all videos from specific channels across your feed</p>
+        <div className="keyword-input-row">
+          <input
+            className="keyword-input"
+            type="text"
+            placeholder="e.g. MrBeast, PewDiePie..."
+            value={channelInput}
+            onChange={(e) => setChannelInput(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && addChannel()}
+          />
+          <button className="keyword-add-btn" onClick={addChannel}>
+            Block
+          </button>
+        </div>
+        <div className="keyword-list">
+          {blockedChannels.length === 0 && (
+            <p className="keyword-empty">No channels blocked — add one above</p>
+          )}
+          {blockedChannels.map((ch) => (
+            <span key={ch} className="keyword-tag keyword-tag--block">
+              {ch}
+              <button className="keyword-remove" onClick={() => removeChannel(ch)}>
+                ×
+              </button>
+            </span>
+          ))}
         </div>
       </section>
 

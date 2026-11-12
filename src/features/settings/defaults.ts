@@ -10,4 +10,5 @@ export const DEFAULT_SETTINGS: ExtensionSettings = {
   watchTimeLimit: 0,
   developerMode: false,
   videoSpeed: 1,
+  blockedChannels: [],
 };

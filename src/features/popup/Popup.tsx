@@ -5,6 +5,7 @@ import HideCommentsToggle from "../comments/components/HideCommentsToggle";
 import HideSuggestedToggle from "../suggested/components/HideSuggestedToggle";
 import FocusModeToggle from "../focus/components/FocusModeToggle";
 import WatchTimeCard from "../watchtime/components/WatchTimeCard";
+import ChannelBlockCard from "../channels/components/ChannelBlockCard";
 
 function SectionLabel({ children }: { children: string }) {
   return <p className="popup-section-label">{children}</p>;
@@ -29,6 +30,7 @@ function Popup() {
           <HideShortsToggle />
           <HideCommentsToggle />
           <HideSuggestedToggle />
+          <ChannelBlockCard />
         </section>
 
         <section className="popup-section">

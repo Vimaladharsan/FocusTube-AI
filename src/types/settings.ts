@@ -10,4 +10,5 @@ export interface ExtensionSettings {
   watchTimeLimit: number;
   developerMode: boolean;
   videoSpeed: number;
+  blockedChannels: string[];
 }

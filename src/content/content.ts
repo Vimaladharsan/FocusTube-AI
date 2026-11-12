@@ -2,6 +2,7 @@ import { getSettings } from "../features/settings";
 import { applyVideoSpeed } from "../features/speed/controller";
 import { initSpeedOverlay } from "../features/speed/overlay";
 import { startFocusFilter, stopFocusFilter } from "../features/focus/filter";
+import { startChannelBlocker, stopChannelBlocker } from "../features/channels/blocker";
 import { startTracker, getTodayMinutes } from "../features/watchtime/tracker";
 import { showLimitBanner } from "../features/watchtime/banner";
 import { updateStreak } from "../features/watchtime/streak";
@@ -196,6 +197,13 @@ async function initializeContentScript() {
     startFocusFilter(settings.focusMode, settings.customKeywords);
   } else {
     stopFocusFilter();
+  }
+
+  const channels = settings.blockedChannels ?? [];
+  if (channels.length > 0) {
+    startChannelBlocker(channels);
+  } else {
+    stopChannelBlocker();
   }
 
   if (settings.videoSpeed !== 1) {
